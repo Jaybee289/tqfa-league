@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>GW13 Debrief — Torquay Free Agents</title>
+<style>
+  :root {
+    --bg:#ffffff; --surface:#f7f7f5; --surface2:#efefec;
+    --border:rgba(0,0,0,0.09); --text:#1a1a1a; --muted:#6b6b6b;
+    --accent:#185fa5; --green:#1d9e75; --amber:#ba7517; --red:#a32d2d;
+    --radius:12px;
+  }
+  @media (prefers-color-scheme:dark) {
+    :root { --bg:#191919; --surface:#242424; --surface2:#2e2e2e;
+            --border:rgba(255,255,255,0.09); --text:#f0ede8; --muted:#888; }
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+         background:var(--bg); color:var(--text); max-width:480px;
+         margin:0 auto; padding:12px 12px 48px; font-size:14px; }
+  .card { background:var(--surface); border:0.5px solid var(--border);
+          border-radius:var(--radius); padding:14px; margin-bottom:12px; }
+  .section-label { font-size:11px; font-weight:700; letter-spacing:0.07em;
+                   text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th { font-size:10px; color:var(--muted); font-weight:700; text-align:left;
+       padding:3px 0 5px; border-bottom:0.5px solid var(--border); }
+  td { padding:7px 0; border-bottom:0.5px solid var(--border); vertical-align:middle; }
+  tr:last-child td { border-bottom:none; }
+  .pos  { color:var(--muted); font-size:11px; min-width:18px; }
+  .mname { font-size:13px; font-weight:500; }
+  .num  { font-size:13px; font-weight:600; color:var(--accent);
+          text-align:right; padding-right:8px; }
+  .cen  { text-align:center; }
+  .alive-pill { display:inline-block; font-size:11px; background:#eaf3de;
+                color:#3b6d11; padding:3px 8px; border-radius:999px; margin:3px 3px 3px 0; }
+  .elim-row { display:flex; align-items:center; gap:8px; padding:6px 0;
+              border-bottom:0.5px solid var(--border); font-size:13px; }
+  .elim-row:last-child { border-bottom:none; }
+  .elim-gw { font-size:10px; background:#fcebeb; color:var(--red);
+              padding:2px 7px; border-radius:999px; font-weight:700;
+              min-width:40px; text-align:center; }
+  .chip-badge { font-size:10px; background:#e6f1fb; color:#185fa5;
+                padding:2px 6px; border-radius:999px; font-weight:600; white-space:nowrap; }
+  .hit-badge  { font-size:10px; background:#fcebeb; color:var(--red);
+                padding:2px 6px; border-radius:999px; font-weight:600; margin-left:4px; }
+  .prize-badge { font-size:11px; background:#faeeda; color:#633806;
+                 padding:2px 8px; border-radius:999px; font-weight:700; }
+  .acc-row { display:flex; align-items:center; padding:7px 0;
+             border-bottom:0.5px solid var(--border); gap:8px; font-size:13px; }
+  .acc-row:last-child { border-bottom:none; }
+  .acc-name { flex:0 0 130px; font-size:12px; }
+  .acc-who  { flex:1; font-weight:500; }
+  .acc-val  { font-size:14px; font-weight:700; color:var(--accent);
+              min-width:36px; text-align:right; }
+
+  .toggle { width:100%;background:none;border:none;color:var(--text);font-family:inherit;
+             font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+             cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:0; }
+  .chev { font-size:16px;color:var(--muted);transition:transform 0.2s; }
+  .chev.open { transform:rotate(180deg); }
+  .collapsible { display:none; }
+  .collapsible.open { display:block; }
+  .block-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+  .block-title{font-size:13px;font-weight:800;}
+  .block-status{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:800;white-space:nowrap;}
+  .block-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:13px;}
+  .block-row:last-child{border-bottom:none;}
+  .block-medal{font-size:16px;width:22px;text-align:center;flex:0 0 22px;}
+  .block-name{flex:1;font-weight:600;min-width:0;}
+  .block-score-wrap{text-align:right;flex:0 0 auto;}
+  .block-score{font-weight:900;color:#00ff87;line-height:1.1;}
+  .block-gap{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.1;}
+  .block-complete{margin-top:10px;border-top:0.5px solid var(--border);padding-top:10px;font-size:13px;}
+  .block-complete-title{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:800;margin-bottom:3px;}
+  .block-complete-winner{font-size:14px;font-weight:900;color:#ffc226;}
+  .lms-box{border-radius:12px;padding:12px;background:var(--surface2);border:0.5px solid var(--border);}
+  .lms-title{font-size:14px;font-weight:800;line-height:1.25;color:var(--text);}
+  .lms-sub{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35;}
+  .lms-warning{margin-top:9px;border-top:1px solid rgba(255,194,38,0.32);padding-top:8px;font-size:11px;color:#ffc226;font-weight:800;line-height:1.35;}
+  .lms-key{font-weight:900;}
+  .lms-key.danger{color:#ff4d4d;}
+  .lms-key.good{color:#00ff87;}
+  .lms-key.warn{color:#ffc226;}
+  .lms-escaped{margin-top:9px;border-top:0.5px solid var(--border);padding-top:8px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+  .lms-escaped-margin{font-size:10px;color:#ffc226;margin-top:2px;line-height:1.25;font-weight:800;}
+  .lms-escaped-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:800;}
+  .lms-escaped-name{font-size:12px;font-weight:700;margin-top:2px;}
+  .lms-escaped-score{font-size:13px;font-weight:900;color:#ffc226;white-space:nowrap;}
+  .division-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+  .division-tile{background:var(--surface2);border:0.5px solid var(--border);border-radius:12px;padding:11px;min-width:0;}
+  .division-tile-head{display:flex;align-items:center;gap:6px;margin-bottom:7px;}
+  .division-icon{font-size:15px;line-height:1;}
+  .division-name{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .division-best{font-size:13px;font-weight:800;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .division-score{font-size:24px;font-weight:900;color:#00ff87;line-height:1;margin-top:5px;letter-spacing:-0.5px;}
+  .division-score-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-top:2px;}
+  .division-meta{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.35;}
+  .division-gap{font-weight:800;color:var(--accent);}
+  .scores-list{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  @media(max-width:360px){.scores-list{grid-template-columns:repeat(2,1fr);}}
+  .score-tile{background:var(--surface2);border:0.5px solid var(--border);border-radius:12px;padding:9px;min-width:0;}
+  .score-tile-top{display:flex;justify-content:space-between;align-items:center;gap:5px;margin-bottom:6px;}
+  .score-head-left{display:flex;align-items:baseline;gap:5px;min-width:0;}
+  .score-rank{font-size:9px;color:var(--muted);font-weight:900;letter-spacing:0.03em;}
+  .score-points{font-size:18px;font-weight:900;line-height:1;color:var(--text);letter-spacing:-0.4px;}
+  .score-diff{font-size:8px;font-weight:800;white-space:nowrap;opacity:0.85;}
+  .score-diff.good{color:var(--green);}
+  .score-diff.bad{color:var(--red);}
+  .score-name{font-size:12px;font-weight:800;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .score-meta{font-size:8px;color:var(--muted);margin-top:3px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .score-meta-main{font-weight:600;}
+  .score-meta-extra{font-size:8px;opacity:0.9;}
+  .score-meta-sep{display:inline-block;color:var(--accent);font-weight:900;font-size:9px;margin:0 3px;opacity:0.55;}
+  .cup-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+  .cup-title{font-size:13px;font-weight:800;}
+  .cup-status{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:800;white-space:nowrap;}
+  .cup-fixture{position:relative;background:var(--surface2);border:0.5px solid var(--border);border-radius:12px;padding:10px;margin-bottom:8px;}
+  .cup-fixture:last-child{margin-bottom:0;}
+  .cup-side{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;}
+  .cup-side.right{margin-top:6px;}
+  .cup-name{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .cup-score{font-size:18px;font-weight:900;color:var(--text);line-height:1;}
+  .cup-vs{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:900;margin:5px 0;text-align:center;}
+  .cup-note{font-size:10px;color:var(--muted);margin-top:7px;border-top:0.5px solid var(--border);padding-top:7px;line-height:1.3;}
+  .cup-group-title{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:900;margin:12px 0 6px;}
+  .cup-group-title:first-child{margin-top:0;}
+  .cup-match-row{display:grid;grid-template-columns:minmax(0,1fr) 76px minmax(0,1fr);gap:10px;align-items:center;}
+  .cup-match-team{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .cup-match-team.away{text-align:right;}
+  .cup-match-team.loser{color:var(--muted);font-weight:700;}
+  .cup-match-team.winner{color:var(--text);font-weight:900;}
+  .cup-match-score{display:flex;justify-content:center;align-items:center;gap:8px;font-size:18px;font-weight:900;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .cup-match-score-value.loser{color:var(--muted);font-weight:800;}
+  .cup-match-score.muted{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+  .cup-empty-box{border-radius:12px;padding:12px;background:var(--surface2);border:0.5px solid var(--border);}
+  .cup-empty-title{font-size:14px;font-weight:800;line-height:1.25;color:var(--text);}
+  .cup-empty-sub{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35;}
+  .strategy-grid{display:grid;grid-template-columns:1fr;gap:8px;}
+  .strategy-card{background:#1e1e1e;border:0.5px solid var(--border);border-radius:12px;padding:12px;min-width:0;overflow:hidden;}
+  .strategy-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;min-width:0;width:100%;}
+  .strategy-top > div:first-child{min-width:0;flex:1;}
+  .strategy-kicker{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:800;margin-bottom:8px;}
+  .strategy-card-subtitle{font-size:11px;color:var(--muted);font-weight:700;margin:-1px 0 8px;}
+  .strategy-player{font-size:16px;font-weight:900;line-height:1.15;white-space:normal;overflow-wrap:anywhere;}
+  .strategy-score{flex:0 0 auto;white-space:nowrap;font-size:17px;font-weight:900;color:var(--green);line-height:1.1;text-align:right;}
+  .strategy-meta{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.35;white-space:normal;overflow-wrap:anywhere;}
+  .strategy-managers{font-size:11px;color:var(--muted);font-weight:700;margin-top:4px;line-height:1.35;white-space:normal;overflow-wrap:anywhere;}
+  .strategy-player-list{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+  .strategy-player-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start;padding:0 0 8px;border-bottom:1px solid var(--border);}
+  .strategy-player-row:last-child{padding-bottom:0;border-bottom:none;}
+  .strategy-player-meta{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.3;}
+  .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;}
+  .form-card{background:#1e1e1e;border:0.5px solid var(--border);border-radius:12px;padding:12px;min-width:0;}
+  .form-kicker{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:800;margin-bottom:5px;}
+  .form-value{font-size:22px;font-weight:900;line-height:1;color:var(--text);}
+  .form-value.good{color:var(--green);}
+  .form-value.bad{color:var(--red);}
+  .form-meta{font-size:11px;color:var(--muted);line-height:1.35;margin-top:7px;}
+  @media(max-width:360px){.form-grid{grid-template-columns:1fr;}}
+  .template-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--border);}
+  .template-row:last-child{border-bottom:none;padding-bottom:0;}
+  .template-player{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .template-meta{font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap;}
+  .transfer-story{padding:10px 0;border-bottom:0.5px solid var(--border);}
+  .transfer-story:last-child{border-bottom:none;padding-bottom:0;}
+  .transfer-story-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+  .transfer-story-main{min-width:0;flex:1;}
+  .transfer-story-label{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:800;margin-bottom:3px;}
+  .transfer-medal{font-size:14px;line-height:1;}
+  .transfer-story-manager{font-size:13px;font-weight:900;line-height:1.2;}
+  .transfer-story-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+  .transfer-gain{font-size:18px;font-weight:900;line-height:1;}
+  .transfer-gain.good{color:#00ff87;}
+  .transfer-gain.bad{color:#ff4d4d;}
+  .transfer-gain.neutral{color:var(--muted);}
+
+  .transfer-moves{background:var(--surface2);border:0.5px solid var(--border);border-radius:10px;padding:8px;}
+  .transfer-move-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto;gap:6px;align-items:center;padding:5px 0;border-bottom:0.5px solid var(--border);font-size:11px;}
+  .transfer-move-row:last-child{border-bottom:none;padding-bottom:0;}
+  .transfer-move-from{color:var(--muted);font-weight:600;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;}
+  .transfer-move-arrow{color:var(--accent);font-weight:900;font-size:12px;line-height:1;}
+  .transfer-move-to{color:var(--text);font-weight:700;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .transfer-move-gain{font-weight:900;white-space:nowrap;text-align:right;}
+  .transfer-move-gain.good{color:var(--green);}
+  .transfer-move-gain.bad{color:var(--red);}
+  .transfer-move-gain.neutral{color:var(--muted);}
+
+  .transfer-summary{font-size:12px;font-weight:900;text-align:right;margin-top:7px;}
+  .transfer-summary.good{color:var(--green);}
+  .transfer-summary.bad{color:var(--red);}
+  .transfer-summary.neutral{color:var(--muted);}
+
+  .transfer-market-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;}
+  .transfer-market-card{background:#1e1e1e;border:0.5px solid var(--border);border-radius:12px;padding:10px;min-width:0;}
+  .transfer-market-title{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:900;margin-bottom:7px;display:flex;align-items:center;gap:5px;}
+  .transfer-market-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--border);}
+  .transfer-market-row:last-child{border-bottom:none;padding-bottom:0;}
+  .transfer-market-name{font-size:12px;font-weight:800;line-height:1.2;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .transfer-market-meta{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.3;white-space:normal;overflow-wrap:anywhere;}
+  .transfer-market-managers{margin-top:5px;display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-start;min-width:0;}
+  .transfer-market-value{font-size:12px;font-weight:900;white-space:nowrap;font-variant-numeric:tabular-nums;}
+  .transfer-market-value.good{color:var(--green);}
+  .transfer-market-value.bad{color:var(--red);}
+  @media(max-width:380px){.transfer-market-grid{grid-template-columns:1fr;}}
+
+  @media(max-width:360px){.transfer-move-row{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);}.transfer-move-gain{grid-column:1 / -1;text-align:right;}}
+  
+
+
+
+
+
+
+  .cap-item {
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    padding:9px 0;
+    border-bottom:0.5px solid var(--border);
+  }
+  .cap-item:last-child {
+    border-bottom:none;
+    padding-bottom:0;
+  }
+  .cap-left {
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    flex:0 0 128px;
+  }
+  .cap-icon {
+    font-size:16px;
+    line-height:1.2;
+    width:20px;
+    text-align:center;
+  }
+  .cap-label {
+    font-size:10px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:0.07em;
+    font-weight:700;
+    margin-top:2px;
+  }
+  .cap-value {
+    flex:1;
+    text-align:right;
+    font-size:13px;
+    font-weight:600;
+    line-height:1.45;
+  }
+  .cap-value-muted {
+    color:var(--muted);
+    font-weight:500;
+  }
+  .bench-row {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:9px 0;
+    border-bottom:0.5px solid var(--border);
+  }
+  .bench-row:last-child {
+    border-bottom:none;
+    padding-bottom:0;
+  }
+  .bench-row:first-of-type {
+    padding-top:0;
+  }
+  .bench-label {
+    font-size:10px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:0.07em;
+    font-weight:700;
+    margin-bottom:3px;
+  }
+  .bench-name {
+    font-size:13px;
+    font-weight:700;
+  }
+  .bench-detail {
+    font-size:11px;
+    color:var(--muted);
+    margin-top:2px;
+    line-height:1.35;
+  }
+  .bench-score {
+    background:#1e1e1e;
+    border:0.5px solid rgba(255,255,255,0.08);
+    border-radius:10px;
+    padding:7px 9px;
+    min-width:64px;
+    text-align:center;
+    font-size:18px;
+    font-weight:900;
+    color:#00ff87;
+    line-height:1;
+    white-space:nowrap;
+  }
+  .bench-score.good {
+    color:#00ff87;
+  }
+  .bench-score.bad {
+    color:#ff4d4d;
+  }
+  .bench-score.warn {
+    color:#ffc226;
+  }
+  .bench-score.neutral {
+    color:var(--muted);
+  }
+  .newsletter-section-spacer{height:14px;}
+  .cup-centre-section{margin-top:18px;}
+  .cup-centre-card{margin-top:14px;}
+  .chip-group {
+    padding:10px 0;
+    border-bottom:0.5px solid var(--border);
+  }
+  .chip-group:last-child {
+    border-bottom:none;
+    padding-bottom:0;
+  }
+  .chip-group:first-child {
+    padding-top:0;
+  }
+  .chip-group-head {
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:7px;
+  }
+  .chip-group-title {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    font-weight:700;
+  }
+  .chip-icon {
+    font-size:18px;
+    width:22px;
+    text-align:center;
+  }
+  .chip-group-meta {
+    font-size:10px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    text-align:right;
+    padding-top:2px;
+  }
+  .chip-manager-row {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:4px 0 4px 30px;
+    font-size:12px;
+  }
+  .chip-manager-name {
+    color:var(--text);
+  }
+  .chip-manager-score {
+    font-weight:800;
+  }
+  .chip-manager-score.good {
+    color:#00ff87;
+  }
+  .chip-manager-score.bad {
+    color:#ff4d4d;
+  }
+  .stat-card-header {
+    display:flex;
+    align-items:center;
+    gap:6px;
+    min-height:18px;
+  }
+  .stat-card-icon {
+    font-size:15px;
+    line-height:1;
+  }
+  .stat-card-label {
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,0.45);
+  }
+  .podium-row {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 0;
+    border-bottom:0.5px solid var(--border);
+  }
+  .podium-row:last-child {
+    border-bottom:none;
+  }
+  .podium-medal {
+    font-size:24px;
+    width:32px;
+    text-align:center;
+    flex:0 0 32px;
+  }
+  .podium-main {
+    flex:1;
+    min-width:0;
+  }
+  .podium-name {
+    font-size:14px;
+    font-weight:800;
+    line-height:1.2;
+  }
+  .podium-meta {
+    margin-top:4px;
+    line-height:1.35;
+  }
+  .podium-meta-main {
+    font-size:11px;
+    color:var(--muted);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .podium-meta-extra {
+    font-size:11px;
+    color:var(--muted);
+    margin-top:2px;
+    line-height:1.35;
+  }
+  .podium-meta-sep {
+    display:inline-block;
+    color:var(--accent);
+    font-weight:900;
+    font-size:12px;
+    margin:0 5px;
+    opacity:0.75;
+  }
+  .podium-score-box {
+    background:#1e1e1e;
+    border:0.5px solid rgba(255,255,255,0.08);
+    border-radius:10px;
+    padding:7px 9px;
+    min-width:64px;
+    text-align:center;
+    flex:0 0 auto;
+  }
+  .podium-score {
+    font-size:24px;
+    font-weight:900;
+    color:#00ff87;
+    line-height:1;
+    letter-spacing:-0.5px;
+  }
+  .podium-score-label {
+    font-size:9px;
+    color:rgba(255,255,255,0.48);
+    text-transform:uppercase;
+    letter-spacing:0.07em;
+    margin-top:3px;
+  }
+  .podium-rank-1 .podium-score {
+    font-size:28px;
+  }
+  .podium-rank-1 .podium-score-box {
+    border-color:rgba(0,255,135,0.35);
+  }
+  .info-row {
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:14px;
+    font-size:13px;
+    padding:7px 0;
+    border-bottom:0.5px solid var(--border);
+  }
+  .info-row:last-child {
+    border-bottom:none;
+  }
+  .info-label {
+    color:var(--muted);
+    flex:0 0 118px;
+  }
+  .info-value {
+    flex:1;
+    text-align:right;
+    font-weight:500;
+    line-height:1.45;
+  }
+  .stack-line,
+  .name-line {
+    display:block;
+  }
+  .poster-name-pills {
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    justify-content:flex-start;
+    min-width:0;
+  }
+  .poster-name-pill {
+    display:inline-block;
+    background:rgba(255,255,255,0.06);
+    border:0.5px solid rgba(255,255,255,0.10);
+    border-radius:999px;
+    padding:3px 7px;
+    font-size:10px;
+    font-weight:800;
+    line-height:1.1;
+    max-width:100%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .strategy-managers .poster-name-pills {
+    justify-content:flex-start;
+    margin-top:4px;
+  }
+  .muted {
+    color:var(--muted);
+  }
+  .stat-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:10px; }
+
+  @media(max-width:600px){
+    td,.score-row,.stat-row,.block-row,.cap-item,.bench-row,.podium-row,.template-row,.transfer-story,.transfer-move-row,.transfer-market-row,.hub-cup-fixture-row,.hub-bracket-row,.hub-tb-row,.hub-lms-elim-row,.hub-block-row,.hub-acc-rank-row,.hub-chip-head,.hub-chip-row{border-bottom-width:1px;}
+    .block-complete,.lms-escaped,.hub-block-winner,.hub-block-muted,.hub-acc-empty,.hub-tb-empty{border-top-width:1px;}
+    .hub-acc-detail-pick + .hub-acc-detail-pick{border-top-width:1px;}
+  }
+</style>
+</head>
+<body>
+
+<div style="text-align:center;padding:20px 0 16px">
+  <div style="font-size:12px;color:var(--muted)">Torquay Free Agents — 2026/27</div>
+  <div style="font-size:22px;font-weight:700;margin:4px 0">Gameweek 13 Debrief</div>
+  <div style="display:inline-block;font-size:12px;padding:3px 12px;background:var(--surface);
+              border-radius:999px;color:var(--muted);margin-top:6px">League average: 42 pts</div>
+</div>
+
+<div class="card">
+  <div class="section-label">Top Performers</div>
+  <div class="podium-row podium-rank-1"><div class="podium-medal">🥇</div><div class="podium-main"><div class="podium-name">James Gosling</div><div class="podium-meta"><div class="podium-meta-main">Captain: Haaland (4)</div><div class="podium-meta-extra">Hero: Foden (15)<span class="podium-meta-sep">•</span>Free Hit</div></div></div><div class="podium-score-box"><div class="podium-score">78</div><div class="podium-score-label">pts</div></div></div><div class="podium-row podium-rank-2"><div class="podium-medal">🥈</div><div class="podium-main"><div class="podium-name">Lee Underz</div><div class="podium-meta"><div class="podium-meta-main">Captain: Haaland (4)</div><div class="podium-meta-extra">Hero: Foden (15)<span class="podium-meta-sep">•</span>Free Hit</div></div></div><div class="podium-score-box"><div class="podium-score">75</div><div class="podium-score-label">pts</div></div></div><div class="podium-row podium-rank-3"><div class="podium-medal">🥉</div><div class="podium-main"><div class="podium-name">Dan Heard</div><div class="podium-meta"><div class="podium-meta-main">Captain: Thiago (26)</div><div class="podium-meta-extra">Hero: B.Fernandes (11)</div></div></div><div class="podium-score-box"><div class="podium-score">64</div><div class="podium-score-label">pts</div></div></div>
+  <div style="display:flex;justify-content:space-between;padding-top:10px;margin-top:8px;
+              border-top:0.5px solid var(--border);font-size:13px;color:var(--muted)">
+    <span>🥄 Wooden spoon</span>
+    <span><b>Beckham Pyatt</b> — 15 pts</span>
+  </div>
+</div>
+
+<div class="card">
+  <button class="toggle" onclick="tog('scores')">
+    <span>All scores</span><span class="chev" id="c-scores">▾</span>
+  </button>
+  <div class="collapsible" id="scores" style="margin-top:10px">
+    <div class="scores-list">
+      <div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#1</span><span class="score-points">78</span></div><span class="score-diff good">+36</span></div><div class="score-name">James Gosling</div><div class="score-meta score-meta-main">Haaland captain (4)</div><div class="score-meta score-meta-extra">Free Hit</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#2</span><span class="score-points">75</span></div><span class="score-diff good">+33</span></div><div class="score-name">Lee Underz</div><div class="score-meta score-meta-main">Haaland captain (4)</div><div class="score-meta score-meta-extra">Free Hit</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#3</span><span class="score-points">64</span></div><span class="score-diff good">+22</span></div><div class="score-name">Dan Heard</div><div class="score-meta score-meta-main">Thiago captain (0)</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#4</span><span class="score-points">57</span></div><span class="score-diff good">+15</span></div><div class="score-name">Richard Stubbs</div><div class="score-meta score-meta-main">Foden captain (30)</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#5</span><span class="score-points">56</span></div><span class="score-diff good">+14</span></div><div class="score-name">William Heard</div><div class="score-meta score-meta-main">B.Fernandes captain (0)</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#6</span><span class="score-points">56</span></div><span class="score-diff good">+14</span></div><div class="score-name">Dave Cornelius</div><div class="score-meta score-meta-main">Haaland captain (6)</div><div class="score-meta score-meta-extra">Triple Captain</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#7</span><span class="score-points">55</span></div><span class="score-diff good">+13</span></div><div class="score-name">George Jones</div><div class="score-meta score-meta-main">Thiago captain (26)</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#8</span><span class="score-points">48</span></div><span class="score-diff good">+6</span></div><div class="score-name">Lee Tripe</div><div class="score-meta score-meta-main">Haaland captain (6)</div><div class="score-meta score-meta-extra">Triple Captain</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#9</span><span class="score-points">45</span></div><span class="score-diff good">+3</span></div><div class="score-name">Charlie Henderson</div><div class="score-meta score-meta-main">Haaland captain (4)</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#10</span><span class="score-points">45</span></div><span class="score-diff good">+3</span></div><div class="score-name">Jordan Bishop</div><div class="score-meta score-meta-main">Haaland captain (6)</div><div class="score-meta score-meta-extra">Triple Captain</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#11</span><span class="score-points">42</span></div><span class="score-diff good">+0</span></div><div class="score-name">Joe Chudley</div><div class="score-meta score-meta-main">Haaland captain (6)</div><div class="score-meta score-meta-extra">Triple Captain</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#12</span><span class="score-points">40</span></div><span class="score-diff bad">-2</span></div><div class="score-name">Luke Bailey</div><div class="score-meta score-meta-main">Haaland captain (4)</div><div class="score-meta score-meta-extra">Bench Boost</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#13</span><span class="score-points">38</span></div><span class="score-diff bad">-4</span></div><div class="score-name">Michael Tapp</div><div class="score-meta score-meta-main">Haaland captain (4)</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#14</span><span class="score-points">38</span></div><span class="score-diff bad">-4</span></div><div class="score-name">Chris Pyatt</div><div class="score-meta score-meta-main">Haaland captain (4)</div><div class="score-meta score-meta-extra">Bench Boost</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#15</span><span class="score-points">38</span></div><span class="score-diff bad">-4</span></div><div class="score-name">Bob Waite</div><div class="score-meta score-meta-main">Haaland captain (4)</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#16</span><span class="score-points">37</span></div><span class="score-diff bad">-5</span></div><div class="score-name">Phil Blackmore</div><div class="score-meta score-meta-main">Haaland captain (4)</div><div class="score-meta score-meta-extra">-4 hit</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#17</span><span class="score-points">34</span></div><span class="score-diff bad">-8</span></div><div class="score-name">Tom Stone</div><div class="score-meta score-meta-main">Haaland captain (4)</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#18</span><span class="score-points">32</span></div><span class="score-diff bad">-10</span></div><div class="score-name">Tom Downer</div><div class="score-meta score-meta-main">Haaland captain (6)</div><div class="score-meta score-meta-extra">Triple Captain</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#19</span><span class="score-points">32</span></div><span class="score-diff bad">-10</span></div><div class="score-name">Dale Sanders</div><div class="score-meta score-meta-main">Haaland captain (4)</div><div class="score-meta score-meta-extra">-8 hit</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#20</span><span class="score-points">29</span></div><span class="score-diff bad">-13</span></div><div class="score-name">Rory Fincher</div><div class="score-meta score-meta-main">Haaland captain (4)</div><div class="score-meta score-meta-extra">Wildcard</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#21</span><span class="score-points">27</span></div><span class="score-diff bad">-15</span></div><div class="score-name">Tim Bishop</div><div class="score-meta score-meta-main">Haaland captain (4)</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#22</span><span class="score-points">27</span></div><span class="score-diff bad">-15</span></div><div class="score-name">Chr Semmens</div><div class="score-meta score-meta-main">Haaland captain (4)</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#23</span><span class="score-points">26</span></div><span class="score-diff bad">-16</span></div><div class="score-name">Richard Matthews</div><div class="score-meta score-meta-main">Haaland captain (6)</div><div class="score-meta score-meta-extra">Triple Captain</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#24</span><span class="score-points">24</span></div><span class="score-diff bad">-18</span></div><div class="score-name">Ben Sims</div><div class="score-meta score-meta-main">Haaland captain (4)</div><div class="score-meta score-meta-extra">-4 hit</div></div><div class="score-tile"><div class="score-tile-top"><div class="score-head-left"><span class="score-rank">#25</span><span class="score-points">15</span></div><span class="score-diff bad">-27</span></div><div class="score-name">Beckham Pyatt</div><div class="score-meta score-meta-main">Cunha captain (0)</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-label">Captaincy Corner</div>
+  <div class="cap-item"><div class="cap-left"><span class="cap-icon">❤️</span><span class="cap-label">Most captained</span></div><div class="cap-value"><b>Haaland (4 pts)</b><br><span class='cap-value-muted'>20 managers</span></div></div>
+  <div class="cap-item"><div class="cap-left"><span class="cap-icon">👑</span><span class="cap-label">Golden armband</span></div><div class="cap-value"><div><b>Foden (30 pts)</b><br><span class='cap-value-muted'>Richard Stubbs</span></div></div></div>
+  <div class="cap-item"><div class="cap-left"><span class="cap-icon">🎲</span><span class="cap-label">Best differential captain</span></div><div class="cap-value"><b>Foden (30 pts)</b><br><span class='cap-value-muted'>Richard Stubbs (4% of league)</span></div></div>
+  <div class="cap-item"><div class="cap-left"><span class="cap-icon">🛟</span><span class="cap-label">Vice-captain hero</span></div><div class="cap-value"><b>Thiago (26 pts)</b><br><span class='cap-value-muted'>Dan Heard</span></div></div>
+  <div class="cap-item"><div class="cap-left"><span class="cap-icon">👻</span><span class="cap-label">Captain dud</span></div><div class="cap-value"><div><b>Cunha (0 pts)</b><br><span class='cap-value-muted'>Beckham Pyatt</span></div></div></div>
+</div>
+
+<div class="card">
+  <div class="section-label">Gameweek Leaders</div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px"><div style="background:#1e1e1e;border:0.5px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 12px;display:flex;flex-direction:column;gap:4px"><div class="stat-card-header"><span class="stat-card-icon">📈</span><span class="stat-card-label">Biggest Riser</span></div><div style="font-size:26px;font-weight:800;color:#00d4ff;line-height:1.1;letter-spacing:-0.5px">+1,553,133</div><div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5;margin-top:2px"><div class="poster-name-pills"><span class="poster-name-pill">Dan Heard</span></div></div></div><div style="background:#1e1e1e;border:0.5px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 12px;display:flex;flex-direction:column;gap:4px"><div class="stat-card-header"><span class="stat-card-icon">📉</span><span class="stat-card-label">Biggest Faller</span></div><div style="font-size:26px;font-weight:800;color:#ff4d4d;line-height:1.1;letter-spacing:-0.5px">−511,186</div><div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5;margin-top:2px"><div class="poster-name-pills"><span class="poster-name-pill">Richard Matthews</span></div></div></div><div style="background:#1e1e1e;border:0.5px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 12px;display:flex;flex-direction:column;gap:4px"><div class="stat-card-header"><span class="stat-card-icon">⚽</span><span class="stat-card-label">Most Goals</span></div><div style="font-size:26px;font-weight:800;color:#00ff87;line-height:1.1;letter-spacing:-0.5px">5</div><div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5;margin-top:2px"><div class="poster-name-pills"><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">James Gosling</span><span class="poster-name-pill">Dave Cornelius</span></div></div></div><div style="background:#1e1e1e;border:0.5px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 12px;display:flex;flex-direction:column;gap:4px"><div class="stat-card-header"><span class="stat-card-icon">🎯</span><span class="stat-card-label">Most Assists</span></div><div style="font-size:26px;font-weight:800;color:#00ff87;line-height:1.1;letter-spacing:-0.5px">4</div><div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5;margin-top:2px"><div class="poster-name-pills"><span class="poster-name-pill">George Jones</span><span class="poster-name-pill">Lee Tripe</span></div></div></div><div style="background:#1e1e1e;border:0.5px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 12px;display:flex;flex-direction:column;gap:4px"><div class="stat-card-header"><span class="stat-card-icon">🛡️</span><span class="stat-card-label">Best Defense</span></div><div style="font-size:26px;font-weight:800;color:#00ff87;line-height:1.1;letter-spacing:-0.5px">+16 pts</div><div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5;margin-top:2px"><div class="poster-name-pills"><span class="poster-name-pill">James Gosling</span></div></div></div><div style="background:#1e1e1e;border:0.5px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 12px;display:flex;flex-direction:column;gap:4px"><div class="stat-card-header"><span class="stat-card-icon">✨</span><span class="stat-card-label">Most BPS</span></div><div style="font-size:26px;font-weight:800;color:#00ff87;line-height:1.1;letter-spacing:-0.5px">+9 pts</div><div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.5;margin-top:2px"><div class="poster-name-pills"><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">James Gosling</span></div></div></div></div>
+</div>
+
+<div class="card">
+  <div class="section-label">Strategy Room</div>
+  <div class="strategy-grid"><div class="strategy-card"><div class="strategy-kicker">Highest scorers</div><div class="strategy-player-list"><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Foden</div><div class="strategy-player-meta">Started by 4 managers (16% of league)</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">James Gosling</span><span class="poster-name-pill">Dave Cornelius</span><span class="poster-name-pill">Richard Stubbs</span></div></div></div><div class="strategy-score">15 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Gakpo</div><div class="strategy-player-meta">Started by 2 managers (8% of league)</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">James Gosling</span></div></div></div><div class="strategy-score">14 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Thiago</div><div class="strategy-player-meta">Started by 10 managers (40% of league)</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Charlie Henderson</span><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">James Gosling</span><span class="poster-name-pill">Joe Chudley</span><span class="poster-name-pill">Dan Heard</span><span class="poster-name-pill">Dave Cornelius</span><span class="poster-name-pill">Jordan Bishop</span><span class="poster-name-pill">George Jones</span><span class="poster-name-pill">Phil Blackmore</span><span class="poster-name-pill">Lee Tripe</span></div></div></div><div class="strategy-score">13 pts</div></div></div></div><div class="strategy-card"><div class="strategy-kicker">Best differentials — Under 20% selected</div><div class="strategy-player-list"><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Foden</div><div class="strategy-player-meta">Started by 4 managers (16% of league)</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">James Gosling</span><span class="poster-name-pill">Dave Cornelius</span><span class="poster-name-pill">Richard Stubbs</span></div></div></div><div class="strategy-score">15 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Gakpo</div><div class="strategy-player-meta">Started by 2 managers (8% of league)</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">James Gosling</span></div></div></div><div class="strategy-score">14 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Kudus</div><div class="strategy-player-meta">Started by 2 managers (8% of league)</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Rory Fincher</span><span class="poster-name-pill">Bob Waite</span></div></div></div><div class="strategy-score">8 pts</div></div></div></div></div>
+
+  <div style="height:12px"></div>
+
+  <div class="section-label" style="margin-bottom:6px">League template</div>
+  <div class="template-row"><div class="template-player">Haaland</div><div class="template-meta">20 managers · 80%</div></div><div class="template-row"><div class="template-player">Dúbravka</div><div class="template-meta">17 managers · 68%</div></div><div class="template-row"><div class="template-player">Semenyo</div><div class="template-meta">13 managers · 52%</div></div><div class="template-row"><div class="template-player">Mbeumo</div><div class="template-meta">11 managers · 44%</div></div><div class="template-row"><div class="template-player">Guéhi</div><div class="template-meta">10 managers · 40%</div></div><div class="template-row"><div class="template-player">Thiago</div><div class="template-meta">10 managers · 40%</div></div><div class="template-row"><div class="template-player">Mateta</div><div class="template-meta">10 managers · 40%</div></div><div class="template-row"><div class="template-player">Raya</div><div class="template-meta">10 managers · 40%</div></div>
+</div>
+
+<div class="card">
+  <div class="section-label">Form Guide</div>
+  <div class="form-grid"><div class="form-card"><div class="form-kicker">Hot Streak</div><div class="form-value good">3 GW streak</div><div class="form-meta">Longest active run above league average</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">George Jones</span><span class="poster-name-pill">Lee Tripe</span></div></div></div><div class="form-card"><div class="form-kicker">Out of Form</div><div class="form-value bad">4 GW streak</div><div class="form-meta">Longest active run below league average</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Beckham Pyatt</span></div></div></div></div>
+</div>
+
+<div class="card">
+  <div class="section-label">Transfer Market</div>
+  <div class="transfer-story"><div class="transfer-story-top"><div class="transfer-story-main"><div class="transfer-story-label"><span class="transfer-medal">📈</span>Best business</div><div class="transfer-story-manager">Dan Heard</div><div class="transfer-story-sub">3 transfers</div></div><div class="transfer-gain good">+15 pts</div></div><div class="transfer-moves"><div class="transfer-move-row"><div class="transfer-move-from">Gyökeres (0)</div><div class="transfer-move-arrow">→</div><div class="transfer-move-to">Thiago (13)</div><div class="transfer-move-gain good">+13</div></div><div class="transfer-move-row"><div class="transfer-move-from">Gabriel (0)</div><div class="transfer-move-arrow">→</div><div class="transfer-move-to">Guéhi (0)</div><div class="transfer-move-gain neutral">0</div></div><div class="transfer-move-row"><div class="transfer-move-from">Reijnders (3)</div><div class="transfer-move-arrow">→</div><div class="transfer-move-to">Saka (5)</div><div class="transfer-move-gain good">+2</div></div></div><div class="transfer-summary good">(+15)</div></div><div class="transfer-story"><div class="transfer-story-top"><div class="transfer-story-main"><div class="transfer-story-label"><span class="transfer-medal">📉</span>Market disaster</div><div class="transfer-story-manager">Dale Sanders</div><div class="transfer-story-sub">3 transfers</div></div><div class="transfer-gain bad">-6 pts</div></div><div class="transfer-moves"><div class="transfer-move-row"><div class="transfer-move-from">Estêvão (1)</div><div class="transfer-move-arrow">→</div><div class="transfer-move-to">Neto (2)</div><div class="transfer-move-gain good">+1</div></div><div class="transfer-move-row"><div class="transfer-move-from">Gabriel (0)</div><div class="transfer-move-arrow">→</div><div class="transfer-move-to">Murillo (0)</div><div class="transfer-move-gain neutral">0</div></div><div class="transfer-move-row"><div class="transfer-move-from">Semenyo (1)</div><div class="transfer-move-arrow">→</div><div class="transfer-move-to">Eze (2)</div><div class="transfer-move-gain good">+1</div></div></div><div class="transfer-summary bad">(+2 − 8 = -6)</div></div>
+  <div style="height:10px"></div><div class="section-label" style="margin-bottom:6px">Market pulse</div><div class="transfer-market-grid"><div class="transfer-market-card"><div class="transfer-market-title"><span>📥</span><span>Most transferred in</span></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">Thiago</div><div class="transfer-market-meta">7 managers<div class="transfer-market-managers"><div class="poster-name-pills"><span class="poster-name-pill">Charlie Henderson</span><span class="poster-name-pill">James Gosling</span><span class="poster-name-pill">Dan Heard</span><span class="poster-name-pill">Jordan Bishop</span><span class="poster-name-pill">George Jones</span><span class="poster-name-pill">Phil Blackmore</span><span class="poster-name-pill">Lee Tripe</span></div></div></div></div><div class="transfer-market-value good">13 pts</div></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">Rogers</div><div class="transfer-market-meta">4 managers<div class="transfer-market-managers"><div class="poster-name-pills"><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">James Gosling</span><span class="poster-name-pill">Luke Bailey</span><span class="poster-name-pill">Phil Blackmore</span></div></div></div></div><div class="transfer-market-value neutral">3 pts</div></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">Cash</div><div class="transfer-market-meta">3 managers<div class="transfer-market-managers"><div class="poster-name-pills"><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">James Gosling</span><span class="poster-name-pill">Richard Matthews</span></div></div></div></div><div class="transfer-market-value good">6 pts</div></div></div><div class="transfer-market-card"><div class="transfer-market-title"><span>📤</span><span>Most transferred out</span></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">João Pedro</div><div class="transfer-market-meta">5 managers<div class="transfer-market-managers"><div class="poster-name-pills"><span class="poster-name-pill">Charlie Henderson</span><span class="poster-name-pill">James Gosling</span><span class="poster-name-pill">Joe Chudley</span><span class="poster-name-pill">George Jones</span><span class="poster-name-pill">Phil Blackmore</span></div></div></div></div><div class="transfer-market-value neutral">1 pts</div></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">Gabriel</div><div class="transfer-market-meta">4 managers<div class="transfer-market-managers"><div class="poster-name-pills"><span class="poster-name-pill">Dan Heard</span><span class="poster-name-pill">Richard Matthews</span><span class="poster-name-pill">Dale Sanders</span><span class="poster-name-pill">Ben Sims</span></div></div></div></div><div class="transfer-market-value neutral">0 pts</div></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">Virgil</div><div class="transfer-market-meta">3 managers<div class="transfer-market-managers"><div class="poster-name-pills"><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">Rory Fincher</span><span class="poster-name-pill">Richard Stubbs</span></div></div></div></div><div class="transfer-market-value bad">6 pts</div></div></div><div class="transfer-market-card"><div class="transfer-market-title"><span>💰</span><span>Most valuable teams</span></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">Charlie Henderson</div><div class="transfer-market-meta">ezepezy</div></div><div class="transfer-market-value ">£103.6m</div></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">Dave Cornelius</div><div class="transfer-market-meta">Net Six & Chill</div></div><div class="transfer-market-value ">£103.5m</div></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">Richard Matthews</div><div class="transfer-market-meta">Rank Outsiders</div></div><div class="transfer-market-value ">£103.5m</div></div></div><div class="transfer-market-card"><div class="transfer-market-title"><span>🪙</span><span>Lowest value teams</span></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">Beckham Pyatt</div><div class="transfer-market-meta">Uwantsumlasagna</div></div><div class="transfer-market-value ">£97.8m</div></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">William Heard</div><div class="transfer-market-meta">PORKYBOYS</div></div><div class="transfer-market-value ">£97.9m</div></div><div class="transfer-market-row"><div style="min-width:0"><div class="transfer-market-name">Dan Heard</div><div class="transfer-market-meta">LIL UZI WIRTZ</div></div><div class="transfer-market-value ">£98.9m</div></div></div></div>
+</div>
+
+<div class="card">
+  <div class="section-label">Bench Watch</div>
+
+  <div class="bench-row">
+    <div>
+      <div class="bench-label">Most benched</div>
+      <div class="bench-name">Joe Chudley</div>
+      <div class="bench-detail">Total unused bench points</div>
+    </div>
+    <div class="bench-score bad">14 pts</div>
+  </div>
+
+  <div class="bench-row">
+    <div>
+      <div class="bench-label">Best left behind</div>
+      <div class="bench-name">Chalobah</div>
+      <div class="bench-detail">Left on Joe Chudley's bench</div>
+    </div>
+    <div class="bench-score warn">9 pts</div>
+  </div>
+
+  <div class="bench-row">
+    <div>
+      <div class="bench-label">Best auto-sub</div>
+      <div class="bench-name">Dewsbury-Hall</div>
+      <div class="bench-detail">Auto-subbed into Dale Sanders's final XI for Murillo</div>
+    </div>
+    <div class="bench-score good">7 pts</div>
+  </div>
+
+</div>
+
+<div class="card">
+  <div class="section-label">Chip Review</div>
+  <div class="chip-group"><div class="chip-group-head"><div class="chip-group-title"><span class="chip-icon">🪑</span><span>Bench Boost</span></div><div class="chip-group-meta">2 played · final bench points</div></div><div class="chip-manager-row"><span class="chip-manager-name">Luke Bailey</span><span class="chip-manager-score good">+7</span></div><div class="chip-manager-row"><span class="chip-manager-name">Chris Pyatt</span><span class="chip-manager-score good">+2</span></div></div><div class="chip-group"><div class="chip-group-head"><div class="chip-group-title"><span class="chip-icon">⚡</span><span>Free Hit</span></div><div class="chip-group-meta">2 played · gain vs previous XI</div></div><div class="chip-manager-row"><span class="chip-manager-name">James Gosling</span><span class="chip-manager-score good">+37</span></div><div class="chip-manager-row"><span class="chip-manager-name">Lee Underz</span><span class="chip-manager-score good">+20</span></div></div><div class="chip-group"><div class="chip-group-head"><div class="chip-group-title"><span class="chip-icon">👑</span><span>Triple Captain</span></div><div class="chip-group-meta">6 played · extra captain points</div></div><div class="chip-manager-row"><span class="chip-manager-name">Joe Chudley</span><span class="chip-manager-score good">+2</span></div><div class="chip-manager-row"><span class="chip-manager-name">Tom Downer</span><span class="chip-manager-score good">+2</span></div><div class="chip-manager-row"><span class="chip-manager-name">Dave Cornelius</span><span class="chip-manager-score good">+2</span></div><div class="chip-manager-row"><span class="chip-manager-name">Richard Matthews</span><span class="chip-manager-score good">+2</span></div><div class="chip-manager-row"><span class="chip-manager-name">Jordan Bishop</span><span class="chip-manager-score good">+2</span></div><div class="chip-manager-row"><span class="chip-manager-name">Lee Tripe</span><span class="chip-manager-score good">+2</span></div></div><div class="chip-group"><div class="chip-group-head"><div class="chip-group-title"><span class="chip-icon">🎯</span><span>Wildcard</span></div><div class="chip-group-meta">1 played · gain vs previous XI</div></div><div class="chip-manager-row"><span class="chip-manager-name">Rory Fincher</span><span class="chip-manager-score bad">-16</span></div></div>
+</div>
+
+<div class="card">
+  <div class="section-label">Division Breakdown</div>
+  <div class="division-grid"><div class="division-tile"><div class="division-tile-head"><span class="division-icon">🦁</span><span class="division-name">Premier League</span></div><div class="division-best">James Gosling</div><div class="division-score">78</div><div class="division-score-label">pts this GW</div><div class="division-meta">Div Avg 60 · <span class="division-gap">+18 vs avg</span></div></div><div class="division-tile"><div class="division-tile-head"><span class="division-icon">🍾</span><span class="division-name">Championship</span></div><div class="division-best">George Jones</div><div class="division-score">55</div><div class="division-score-label">pts this GW</div><div class="division-meta">Div Avg 40 · <span class="division-gap">+15 vs avg</span></div></div><div class="division-tile"><div class="division-tile-head"><span class="division-icon">1️⃣</span><span class="division-name">League One</span></div><div class="division-best">Dave Cornelius</div><div class="division-score">56</div><div class="division-score-label">pts this GW</div><div class="division-meta">Div Avg 35 · <span class="division-gap">+21 vs avg</span></div></div><div class="division-tile"><div class="division-tile-head"><span class="division-icon">2️⃣</span><span class="division-name">League Two</span></div><div class="division-best">Richard Stubbs</div><div class="division-score">57</div><div class="division-score-label">pts this GW</div><div class="division-meta">Div Avg 36 · <span class="division-gap">+21 vs avg</span></div></div></div>
+</div>
+
+<div class="card">
+  <div class="section-label">Manager of the Block</div>
+  <div class="block-head"><div class="block-title">Block 3</div><div class="block-status">Live standings</div></div><div class="block-row"><span class="block-medal">🥇</span><span class="block-name">James Gosling</span><span class="block-score-wrap"><div class="block-score">183 pts</div><div class="block-gap">leader</div></span></div><div class="block-row"><span class="block-medal">🥈</span><span class="block-name">George Jones</span><span class="block-score-wrap"><div class="block-score">170 pts</div><div class="block-gap">13 behind</div></span></div><div class="block-row"><span class="block-medal">🥉</span><span class="block-name">William Heard</span><span class="block-score-wrap"><div class="block-score">164 pts</div><div class="block-gap">19 behind</div></span></div>
+</div>
+
+<div class="card">
+  <div class="section-label">Last Man Standing</div>
+  <div class="lms-box"><div class="lms-title">🧟 <span class="lms-key danger">Ben Sims</span> eliminated</div><div class="lms-sub">15 managers remain · 24 pts</div><div class="lms-escaped"><div><div class="lms-escaped-label">Scraped through</div><div class="lms-escaped-name">Richard Matthews</div><div class="lms-escaped-margin">Survived by 2 pt(s)</div></div></div></div>
+</div>
+
+<div class="card cup-centre-section">
+  <div class="section-label">Cup Centre</div>
+  <div class="cup-head"><div class="cup-title">Next cup round</div><div class="cup-status">GW14</div></div><div class="cup-group-title">Group A</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Charlie Henderson</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Bob Waite</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Tom Stone</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Luke Bailey</div></div></div><div class="cup-group-title">Group B</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Lee Underz</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Phil Blackmore</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Lee Tripe</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Dave Cornelius</div></div></div><div class="cup-group-title">Group C</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">James Gosling</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Tim Bishop</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Chr Semmens</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Richard Matthews</div></div></div><div class="cup-group-title">Group D</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Joe Chudley</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Ben Sims</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Richard Stubbs</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Dale Sanders</div></div></div><div class="cup-group-title">Group E</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Michael Tapp</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">George Jones</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Beckham Pyatt</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Jordan Bishop</div></div></div>
+</div>
+
+<div style="text-align:center;margin-top:8px">
+  <a href="league_hub.html" style="font-size:13px;color:var(--accent);text-decoration:none;
+     font-weight:600">← Back to League Hub</a>
+</div>
+
+<script>
+function tog(id) {
+  const el = document.getElementById(id);
+  const ch = document.getElementById('c-' + id);
+  el.classList.toggle('open');
+  if (ch) ch.classList.toggle('open', el.classList.contains('open'));
+}
+</script>
+</body></html>
