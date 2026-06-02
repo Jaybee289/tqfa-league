@@ -30,15 +30,13 @@ DIV_ICONS = {"Premier League": "🦁", "Championship": "🍾",
 
 BASE_CSS = """
   :root {
-    --bg:#ffffff; --surface:#f7f7f5; --surface2:#efefec;
-    --border:rgba(0,0,0,0.09); --text:#1a1a1a; --muted:#6b6b6b;
-    --accent:#185fa5; --green:#1d9e75; --amber:#ba7517; --red:#a32d2d;
+    color-scheme:dark;
+    --bg:#191919; --surface:#242424; --surface2:#2e2e2e;
+    --border:rgba(255,255,255,0.09); --text:#f0ede8; --muted:#888;
+    --accent:#185fa5; --green:#00ff87; --amber:#ffc226; --red:#ff4d4d;
     --radius:12px;
   }
-  @media (prefers-color-scheme:dark) {
-    :root { --bg:#191919; --surface:#242424; --surface2:#2e2e2e;
-            --border:rgba(255,255,255,0.09); --text:#f0ede8; --muted:#888; }
-  }
+  html { background:#191919; }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
          background:var(--bg); color:var(--text); max-width:480px;
@@ -658,6 +656,16 @@ HUB_CSS = """
   .hub-live-kicker{{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:900;}}
   .hub-live-title{{font-size:13px;font-weight:900;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);}}
   .hub-live-sub{{font-size:10px;color:var(--muted);font-weight:700;line-height:1.25;min-height:13px;}}
+
+  .hub-debrief-grid{{display:grid;grid-template-columns:1fr;gap:8px;}}
+  .hub-debrief-card{{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface2);border:0.5px solid var(--border);border-radius:12px;padding:11px 12px;text-decoration:none;color:var(--text);}}
+  .hub-debrief-card:hover{{border-color:rgba(86,156,255,0.55);background:rgba(86,156,255,0.08);}}
+  .hub-debrief-main{{min-width:0;}}
+  .hub-debrief-title{{font-size:13px;font-weight:900;line-height:1.2;}}
+  .hub-debrief-sub{{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.25;}}
+  .hub-debrief-pill{{flex:0 0 auto;border:0.5px solid var(--border);border-radius:999px;padding:4px 8px;font-size:10px;font-weight:900;color:var(--muted);background:var(--surface);white-space:nowrap;}}
+  .hub-debrief-card.latest .hub-debrief-pill{{border-color:rgba(86,156,255,0.55);background:rgba(86,156,255,0.14);color:#9ec5ff;}}
+  @media(min-width:700px){{.hub-debrief-grid{{grid-template-columns:repeat(2,minmax(0,1fr));}}}}
   .hub-live-link{{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;width:max-content;max-width:100%;border:0.5px solid rgba(86,156,255,0.55);background:rgba(86,156,255,0.14);color:#9ec5ff;border-radius:999px;padding:5px 8px;text-decoration:none;font-size:10px;font-weight:900;line-height:1;box-shadow:0 4px 14px rgba(0,0,0,0.12);}}
   .hub-live-link:hover{{border-color:rgba(86,156,255,0.85);background:rgba(86,156,255,0.2);}}
   .hub-live-card.live{{border-color:rgba(0,255,135,0.28);}}
@@ -1414,6 +1422,59 @@ def _division_captain_html(row):
     return f'<span class="hub-captain-wrap"><span class="hub-captain-text">{captain_name} ({captain_pts})</span></span>'
 
 
+
+DEBRIEF_DIR = "newsletters"
+
+def _debrief_href(gw):
+    try:
+        gw_int = int(gw)
+    except (TypeError, ValueError):
+        gw_int = gw
+    return f"{DEBRIEF_DIR}/gw_{gw_int}_poster.html"
+
+
+def _available_debrief_gws(master, current_gw=None):
+    """Return gameweeks that should have a generated debrief page."""
+    gws = set()
+    gw_history = master.get('gw_history', {}) or {}
+    if isinstance(gw_history, dict):
+        for key in gw_history.keys():
+            if str(key).isdigit():
+                gws.add(int(key))
+    last_processed = (master.get('league_metadata', {}) or {}).get('last_processed_gw')
+    if str(last_processed or '').isdigit():
+        gws.add(int(last_processed))
+    if str(current_gw or '').isdigit():
+        gws.add(int(current_gw))
+    return sorted(gws)
+
+
+def _debriefs_html(master, current_gw=None):
+    gws = _available_debrief_gws(master, current_gw)
+    if not gws:
+        return (
+            '<div class="hub-info-pill">'
+            '<strong>No debriefs yet.</strong> Weekly debrief links will appear here once gameweeks are generated.'
+            '</div>'
+        )
+
+    latest = max(gws)
+    rows = []
+    for gw in sorted(gws, reverse=True):
+        latest_cls = ' latest' if gw == latest else ''
+        pill = 'Latest' if gw == latest else 'Open'
+        rows.append(
+            f'<a class="hub-debrief-card{latest_cls}" href="{_debrief_href(gw)}">'
+            f'<div class="hub-debrief-main">'
+            f'<div class="hub-debrief-title">Gameweek {gw} Debrief</div>'
+            f'<div class="hub-debrief-sub">Weekly scores, captaincy, stat leaders and competition updates</div>'
+            f'</div>'
+            f'<span class="hub-debrief-pill">{pill}</span>'
+            f'</a>'
+        )
+    return '<div class="hub-debrief-grid">' + ''.join(rows) + '</div>'
+
+
 def _live_status_html(master, current_gw):
     comp = master.get('competitions', {}) or {}
     lms = comp.get('lms', {}) or {}
@@ -1506,7 +1567,7 @@ def _live_status_html(master, current_gw):
         cup_class = 'idle'
 
     cards = [
-        ('Gameweek', f'GW{current_gw}', f'<a class="hub-live-link" href="gw_{current_gw}_poster.html">↗ Open debrief</a>', 'live'),
+        ('Gameweek', f'GW{current_gw}', f'<a class="hub-live-link" href="{_debrief_href(current_gw)}">↗ Open debrief</a>', 'live'),
         ('Block', block_title, block_sub, block_class),
         ('LMS', lms_title, lms_sub, lms_class),
         ('Cup', cup_title, cup_sub, cup_class),
@@ -5352,7 +5413,21 @@ function tog(id) {{
     path = os.path.join(output_dir, f"gw_{gameweek}_poster.html")
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)
+
+    # Also mirror debriefs into /newsletters so GitHub Pages links from the hub work cleanly.
+    mirror_dir = os.path.join(output_dir, DEBRIEF_DIR)
+    try:
+        os.makedirs(mirror_dir, exist_ok=True)
+        mirror_path = os.path.join(mirror_dir, f"gw_{gameweek}_poster.html")
+        mirror_html = html.replace('href="league_hub.html"', 'href="../league_hub.html"')
+        with open(mirror_path, "w", encoding="utf-8") as f:
+            f.write(mirror_html)
+    except OSError:
+        mirror_path = None
+
     print(f"  [HTML] GW poster → {path}")
+    if mirror_path:
+        print(f"  [HTML] GW debrief mirror → {mirror_path}")
     return path
 
 
@@ -5788,6 +5863,7 @@ def build_hub(gameweek, master, output_dir=".", gw_results=None):
     block_tiebreakers = _tiebreakers_html(master, gameweek, gw_results or {}, scope="block")
     form_streaks_hub = _hub_form_streaks_html(master, gameweek)
     live_status = _live_status_html(master, gameweek)
+    debriefs_section = _debriefs_html(master, gameweek)
 
     league = master['league_metadata']['league_name']
     season = master['league_metadata']['season']
@@ -5811,6 +5887,7 @@ def build_hub(gameweek, master, output_dir=".", gw_results=None):
 
 <div class="nav">
   <button class="nav-btn active" onclick="show('divs',this)">Divisions</button>
+  <button class="nav-btn" onclick="show('debriefs',this)">Debriefs</button>
   <button class="nav-btn" onclick="show('lms',this)">LMS</button>
   <button class="nav-btn" onclick="show('cup',this)">Cup</button>
   <button class="nav-btn" onclick="show('block',this)">Block</button>
@@ -5830,6 +5907,15 @@ def build_hub(gameweek, master, output_dir=".", gw_results=None):
   <div class="card">
     <div class="section-label">Division tie-breakers</div>
     {div_tiebreakers}
+  </div>
+</div>
+
+
+<div class="section" id="debriefs">
+  <div class="card">
+    <div class="section-label">Debrief archive</div>
+    <div class="hub-info-pill"><strong>Weekly archive</strong> — Open previous GW debriefs from one place.</div>
+    {debriefs_section}
   </div>
 </div>
 
