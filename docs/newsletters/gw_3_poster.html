@@ -900,16 +900,24 @@
     background:var(--surface2);
     color: var(--text);
     border: 1px solid var(--border);
-    border-radius: var(--pill);
+    border-radius: 14px;
     padding:3px 10px;
     font-size:11px;
     font-weight:600;
     letter-spacing: 0.02em;
-    line-height:1.1;
+    line-height:1.25;
+    /* A pill is a flex item, and flex items default to min-width:auto — with
+       white-space:nowrap that "auto" is the FULL unwrapped text width, so
+       max-width:100% couldn't actually shrink a long name and it overflowed
+       the card on narrow (mobile) screens. min-width:0 lets it shrink, and
+       swapping nowrap+ellipsis for a normal wrap lets a long name break onto
+       a second line inside the pill instead of being cut off or spilling out. */
     max-width:100%;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:break-word;
+    hyphens:auto;
+    text-align:center;
   }
   .strategy-managers .poster-name-pills {
     justify-content:flex-start;
@@ -1077,4 +1085,4 @@ function pInfo(btn) {
 }
 </script>
 </body></html>
-<!-- poster-version: 13.4 -->
+<!-- poster-version: 15 -->
