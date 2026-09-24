@@ -364,6 +364,10 @@
   .poster-nav-btn.active .pn-ic{transform:translateY(-1px);}
   /* Give the page room so the fixed bar never covers the final content. */
   body.has-poster-nav{padding-bottom:64px;}
+  /* Viewer's own name highlight (mirrors the hub). Accent colour across the
+     poster's manager-name elements; pill-shaped ones also get a tinted fill. */
+  .name-you{color:var(--accent) !important;font-weight:900;}
+  .poster-name-pill.name-you{border-color:var(--accent);}
   .mover-subs{margin-top:8px;border-top:0.5px solid rgba(255,255,255,0.10);padding-top:7px;
               display:flex;flex-direction:column;gap:4px;}
   .mover-sub{display:block;font-size:10px;margin-bottom:5px;}
@@ -953,7 +957,7 @@
   <div style="font-size:22px;font-weight:700;margin:4px 0">Gameweek 2 Debrief</div>
 </div>
 
-<div class="poster-headline"><div class="ph-line"><b>Michael Tapp</b> posted the week's best haul of <b>117</b> (31 over average)</div><div class="ph-line">🧟 <b>Lee Tripe</b>'s LMS run ended</div><div class="ph-line">👑 <b>B.Fernandes</b> returned <b>46</b> for the captains</div></div>
+<div class="poster-headline"><div class="ph-line"><b><span class="headline-name">Michael Tapp</span></b> posted the week's best haul of <b>117</b> (31 over average)</div><div class="ph-line">🧟 <b>Lee Tripe</b>'s LMS run ended</div><div class="ph-line">👑 <b>B.Fernandes</b> returned <b>46</b> for the captains</div></div>
 <div class="poster-glance"><div class="pg-cell"><div class="pg-val">117</div><div class="pg-lbl">Highest</div></div><div class="pg-cell"><div class="pg-val">86</div><div class="pg-lbl">Average</div></div><div class="pg-cell"><div class="pg-val">60</div><div class="pg-lbl">Lowest</div></div></div>
 
 <div class="poster-band" id="nav-top">Top Performers</div>
@@ -963,7 +967,7 @@
   <div style="display:flex;justify-content:space-between;padding-top:10px;margin-top:8px;
               border-top:0.5px solid var(--border);font-size:13px;color:var(--muted)">
     <span>🥄 Wooden spoon</span>
-    <span><b>Lee Tripe</b> — 60 pts</span>
+    <span><b class="spoon-name">Lee Tripe</b> — 60 pts</span>
   </div>
 </div>
 
@@ -997,7 +1001,7 @@
 <div class="poster-band">Strategy Room</div>
 
 <div class="card">
-  <div class="strategy-grid"><div class="strategy-card"><div class="strategy-kicker">Highest scorers</div><div class="strategy-player-list"><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">B.Fernandes</div><div class="strategy-player-meta">16 managers · 57% of league</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Jordan Bishop</span><span class="poster-name-pill">Luke Bailey</span><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">Michael Tapp</span><span class="poster-name-pill">Dale Sanders</span><span class="poster-name-pill">Richard Matthews</span><span class="poster-name-pill">Charlie Henderson</span><span class="poster-name-pill">Paul Hill</span><span class="poster-name-pill">George Jones</span><span class="poster-name-pill">Tim Bishop</span><span class="poster-name-pill">callum brown</span><span class="poster-name-pill">Bob Waite</span><span class="poster-name-pill">Phil Blackmore</span><span class="poster-name-pill">Michelle Brown</span><span class="poster-name-pill">Rory Fincher</span><span class="poster-name-pill">Ben Sims</span></div></div></div><div class="strategy-score">23 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Cherki</div><div class="strategy-player-meta">1 manager · 4% of league</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Steve Oaten</span></div></div></div><div class="strategy-score">14 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Haaland</div><div class="strategy-player-meta">19 managers · 68% of league</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">Joe Chudley</span><span class="poster-name-pill">Michael Tapp</span><span class="poster-name-pill">Dale Sanders</span><span class="poster-name-pill">Richard Matthews</span><span class="poster-name-pill">Tom Stone</span><span class="poster-name-pill">Charlie Henderson</span><span class="poster-name-pill">Tom Downer</span><span class="poster-name-pill">Paul Hill</span><span class="poster-name-pill">James Gosling</span><span class="poster-name-pill">Tim Bishop</span><span class="poster-name-pill">Chris Pyatt</span><span class="poster-name-pill">callum brown</span><span class="poster-name-pill">Steve Oaten</span><span class="poster-name-pill">Dave Cornelius</span><span class="poster-name-pill">Fi Sewter</span><span class="poster-name-pill">Phil Blackmore</span><span class="poster-name-pill">Alberto Duro</span><span class="poster-name-pill">Rory Fincher</span></div></div></div><div class="strategy-score">13 pts</div></div></div></div><div class="strategy-card"><div class="strategy-kicker">Best differentials — Under 15% selected</div><div class="strategy-player-list"><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Cherki</div></div><div class="strategy-score">14 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Groß</div><div class="strategy-player-meta">1 manager · 4% of league</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Michael Tapp</span></div></div></div><div class="strategy-score">13 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Tarkowski</div><div class="strategy-player-meta">3 managers · 11% of league</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Bob Waite</span><span class="poster-name-pill">Richard Stubbs</span><span class="poster-name-pill">Lee Tripe</span></div></div></div><div class="strategy-score">12 pts</div></div></div></div></div>
+  <div class="strategy-grid"><div class="strategy-card"><div class="strategy-kicker">Highest scorers</div><div class="strategy-player-list"><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">B.Fernandes</div><div class="strategy-player-meta">16 managers · 57% of league</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Jordan Bishop</span><span class="poster-name-pill">Luke Bailey</span><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">Michael Tapp</span><span class="poster-name-pill">Dale Sanders</span><span class="poster-name-pill">Richard Matthews</span><span class="poster-name-pill">Charlie Henderson</span><span class="poster-name-pill">Paul Hill</span><span class="poster-name-pill">George Jones</span><span class="poster-name-pill">Tim Bishop</span><span class="poster-name-pill">callum brown</span><span class="poster-name-pill">Bob Waite</span><span class="poster-name-pill">Phil Blackmore</span><span class="poster-name-pill">Michelle Brown</span><span class="poster-name-pill">Rory Fincher</span><span class="poster-name-pill">Ben Sims</span></div></div></div><div class="strategy-score">23 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Cherki</div><div class="strategy-player-meta">1 manager · 4% of league</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Steve Oaten</span></div></div></div><div class="strategy-score">14 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Haaland</div><div class="strategy-player-meta">19 managers · 68% of league</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Lee Underz</span><span class="poster-name-pill">Joe Chudley</span><span class="poster-name-pill">Michael Tapp</span><span class="poster-name-pill">Dale Sanders</span><span class="poster-name-pill">Tom Stone</span><span class="poster-name-pill">Richard Matthews</span><span class="poster-name-pill">Charlie Henderson</span><span class="poster-name-pill">Tom Downer</span><span class="poster-name-pill">Paul Hill</span><span class="poster-name-pill">James Gosling</span><span class="poster-name-pill">Tim Bishop</span><span class="poster-name-pill">Chris Pyatt</span><span class="poster-name-pill">callum brown</span><span class="poster-name-pill">Steve Oaten</span><span class="poster-name-pill">Dave Cornelius</span><span class="poster-name-pill">Fi Sewter</span><span class="poster-name-pill">Phil Blackmore</span><span class="poster-name-pill">Alberto Duro</span><span class="poster-name-pill">Rory Fincher</span></div></div></div><div class="strategy-score">13 pts</div></div></div></div><div class="strategy-card"><div class="strategy-kicker">Best differentials — Under 15% selected</div><div class="strategy-player-list"><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Cherki</div></div><div class="strategy-score">14 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Groß</div><div class="strategy-player-meta">1 manager · 4% of league</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Michael Tapp</span></div></div></div><div class="strategy-score">13 pts</div></div><div class="strategy-player-row"><div style="min-width:0;"><div class="strategy-player">Tarkowski</div><div class="strategy-player-meta">3 managers · 11% of league</div><div class="strategy-managers"><div class="poster-name-pills"><span class="poster-name-pill">Bob Waite</span><span class="poster-name-pill">Richard Stubbs</span><span class="poster-name-pill">Lee Tripe</span></div></div></div><div class="strategy-score">12 pts</div></div></div></div></div>
 </div>
 
 <div class="card" id="nav-xi">
@@ -1027,7 +1031,7 @@
   <div class="bench-row">
     <div>
       <div class="bench-label">Most benched</div>
-      <div class="bench-name">Lee Tripe</div>
+      <div class="bench-name bench-name-mgr">Lee Tripe</div>
       <div class="bench-detail">Total unused bench points</div>
     </div>
     <div class="bench-score bad">21 pts</div>
@@ -1053,14 +1057,14 @@
 
 </div>
 
-<div class="poster-band">Chip Review</div><div class="card"><div class="chip-group"><div class="chip-group-head"><div class="chip-group-title"><span class="chip-icon">🎯</span><span>Wildcard</span></div><div class="chip-group-meta">3 played · gain vs previous XI</div></div><div class="chip-manager-row"><span class="chip-manager-name">Alberto Duro</span><span class="chip-manager-score good">+10</span></div><div class="chip-manager-row"><span class="chip-manager-name">Ben Sims</span><span class="chip-manager-score bad">-12</span></div><div class="chip-manager-row"><span class="chip-manager-name">Beckham Pyatt</span><span class="chip-manager-score bad">-21</span></div></div></div>
+<div class="poster-band" id="nav-chips">Chip Review</div><div class="card"><div class="chip-group"><div class="chip-group-head"><div class="chip-group-title"><span class="chip-icon">🎯</span><span>Wildcard</span></div><div class="chip-group-meta">3 played · gain vs previous XI</div></div><div class="chip-manager-row"><span class="chip-manager-name">Alberto Duro</span><span class="chip-manager-score good">+10</span></div><div class="chip-manager-row"><span class="chip-manager-name">Ben Sims</span><span class="chip-manager-score bad">-12</span></div><div class="chip-manager-row"><span class="chip-manager-name">Beckham Pyatt</span><span class="chip-manager-score bad">-21</span></div></div></div>
 
 <div class="poster-band" id="nav-cups">Competitions</div><div class="card"><div class="section-label">Manager of the Block</div><div class="block-head"><div class="block-title">Block 1</div><div class="block-status">Live standings</div></div><div class="block-row"><span class="block-medal">🥇</span><span class="block-name">Jordan Bishop</span><span class="block-score-wrap"><div class="block-score">196 pts</div><div class="block-gap">leader</div></span></div><div class="block-row"><span class="block-medal">🥈</span><span class="block-name">Lee Underz</span><span class="block-score-wrap"><div class="block-score">194 pts</div><div class="block-gap">2 behind</div></span></div><div class="block-row"><span class="block-medal">🥉</span><span class="block-name">Luke Bailey</span><span class="block-score-wrap"><div class="block-score">193 pts</div><div class="block-gap">3 behind</div></span></div></div><div class="card"><div class="section-label">Last Man Standing</div><div class="lms-box"><div class="lms-title">🧟 <span class="lms-key danger">Lee Tripe</span> eliminated</div><div class="lms-sub">27 managers remain · 60 pts</div><div class="lms-escaped"><div><div class="lms-escaped-label">Survived</div><div class="lms-escaped-name">Dave Cornelius</div><div class="lms-escaped-margin">Survived by 2 pt(s)</div></div></div></div></div><div class="card cup-centre-section"><div class="section-label">Cup Centre</div><div class="cup-head"><div class="cup-title">Next cup round</div><div class="cup-status">GW5</div></div><div class="cup-group-title">Group A</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Charlie Henderson</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Beckham Pyatt</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Jordan Bishop</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">George Jones</div></div></div><div class="cup-group-title">Group B</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Lee Underz</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Michelle Brown</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Dale Sanders</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">callum brown</div></div></div><div class="cup-group-title">Group C</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">James Gosling</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Richard Stubbs</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Fi Sewter</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Paul Hill</div></div></div><div class="cup-group-title">Group D</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Joe Chudley</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Alberto Duro</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Richard Matthews</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Ben Sims</div></div></div><div class="cup-group-title">Group E</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Michael Tapp</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Lee Tripe</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Dave Cornelius</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Tim Bishop</div></div></div><div class="cup-group-title">Group F</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Tom Downer</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Tom Stone</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Luke Bailey</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Phil Blackmore</div></div></div><div class="cup-group-title">Group G</div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Chris Pyatt</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Steve Oaten</div></div></div><div class="cup-fixture"><div class="cup-match-row"><div class="cup-match-team">Rory Fincher</div><span class="cup-match-score muted">v</span><div class="cup-match-team away">Bob Waite</div></div></div></div>
 
 <!-- QUICKFIX-POSTER-BACK START — back link was ~142x15dp (below 44dp min).
      Padded to a proper tap target. To revert, restore the two ORIGINAL lines in the comment below. -->
 <div style="text-align:center;margin-top:8px">
-  <a href="../league_hub.html" style="display:inline-flex;align-items:center;justify-content:center;
+  <a id="poster-back-link" href="../league_hub.html" style="display:inline-flex;align-items:center;justify-content:center;
      min-height:44px;padding:10px 18px;font-size:13px;color:var(--accent);text-decoration:none;
      font-weight:600">← Back to League Hub</a>
 </div>
@@ -1104,10 +1108,10 @@ function pInfo(btn) {
   // Ordered list of possible targets. Each renders only if its anchor exists.
   var ITEMS = [
     {id:'nav-top',     ic:'🏆', lbl:'Top'},
-    {id:'nav-stats',   ic:'⭐', lbl:'Stats'},
     {id:'nav-tactics', ic:'🧠', lbl:'Tactics'},
     {id:'nav-xi',      ic:'👕', lbl:'XI'},
     {id:'nav-market',  ic:'🔄', lbl:'Market'},
+    {id:'nav-chips',   ic:'🎴', lbl:'Chips'},
     {id:'nav-cups',    ic:'🥇', lbl:'Cups'}
   ];
   var present = ITEMS.filter(function(it){ return document.getElementById(it.id); });
@@ -1127,12 +1131,24 @@ function pInfo(btn) {
     nav.appendChild(a);
     btnById[it.id] = a;
   });
-  // Hub link always last.
+  // Resolve where the reader came from (the hub tags poster links with ?from=)
+  // so the back controls point — and read — the right way. Unknown/absent =
+  // plain Hub home (e.g. a shared or bookmarked link).
+  var BACK = {
+    debrief: {href:'../league_hub.html#debrief', lbl:'Debriefs', ic:'📰'},
+    divs:    {href:'../league_hub.html#divs',    lbl:'Divisions', ic:'🏆'}
+  };
+  var fromKey = (new URLSearchParams(location.search).get('from') || '').toLowerCase();
+  var back = BACK[fromKey] || {href:'../league_hub.html', lbl:'Hub', ic:'🏠'};
+  // Inline back link at the foot of the poster.
+  var inlineBack = document.getElementById('poster-back-link');
+  if(inlineBack){ inlineBack.href = back.href; inlineBack.textContent = '← Back to ' + back.lbl; }
+  // Hub link always last in the nav bar — matches where you came from.
   var hub = document.createElement('a');
   hub.className = 'poster-nav-btn';
-  hub.href = '../league_hub.html';
-  hub.setAttribute('aria-label','Back to League Hub');
-  hub.innerHTML = '<span class="pn-ic">🏠</span><span class="pn-lbl">Hub</span>';
+  hub.href = back.href;
+  hub.setAttribute('aria-label','Back to ' + back.lbl);
+  hub.innerHTML = '<span class="pn-ic">' + back.ic + '</span><span class="pn-lbl">' + back.lbl + '</span>';
   nav.appendChild(hub);
   document.body.classList.add('has-poster-nav');
 
@@ -1155,6 +1171,38 @@ function pInfo(btn) {
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
+// ── Highlight the viewer's own name on the poster ────────────────────────────
+// Uses the manager id the viewer set in the hub (shared localStorage, same
+// origin) + an injected id->name map. Only a curated allow-list of
+// MANAGER-name classes is tagged — never player-name elements (pitch, hero,
+// bench player), so a manager whose team is named after a footballer can't
+// trigger false highlights on that player.
+(function(){
+  var MGR_NAMES = {"3164544": "Charlie Henderson", "1457": "Lee Underz", "62964": "James Gosling", "28077": "Joe Chudley", "2561621": "Michael Tapp", "3189186": "Tom Downer", "1085390": "Chris Pyatt", "3412941": "Rory Fincher", "1358163": "Luke Bailey", "764131": "Dave Cornelius", "37365": "Richard Matthews", "1026598": "Dale Sanders", "18027": "Jordan Bishop", "2868067": "George Jones", "244169": "Ben Sims", "3126647": "Tim Bishop", "6659039": "Phil Blackmore", "3452961": "Bob Waite", "4976006": "Tom Stone", "3401683": "Lee Tripe", "5126401": "Richard Stubbs", "4503081": "Beckham Pyatt", "3755385": "Fi Sewter", "1784120": "Callum Brown", "4103092": "Paul Hill", "3644067": "Steve Oaten", "7263750": "Alberto Duro", "3752561": "Michelle Brown"};
+  var mid;
+  try { mid = localStorage.getItem('fpl_my_manager'); } catch(e) { return; }
+  if (!mid) return;
+  var myName = (MGR_NAMES[mid] || '').trim();
+  if (!myName) return;
+  // Manager-name classes only. Player-name elements (pitch-name, tx-hero-name,
+  // the bench PLAYER rows, captaincy-corner player picks) are deliberately
+  // excluded — bench-name-mgr is the one bench row that is a manager.
+  var sels = ['.podium-name', '.transfer-market-name', '.transfer-story-manager',
+              '.chip-manager-name', '.bench-name-mgr', '.lms-escaped-name',
+              '.cup-match-team', '.poster-name-pill', '.ms-riv-name',
+              '.division-best', '.block-name', '.cap-value-muted',
+              '.headline-name', '.spoon-name'];
+  document.querySelectorAll(sels.join(',')).forEach(function(el){
+    var txt = (el.textContent || '').trim();
+    if (txt === myName) { el.classList.add('name-you'); return; }
+    // "Most benched" can list tied managers ("A & B" or "A +N") in one blob —
+    // match the viewer against the individual names, not the whole string.
+    if (el.classList.contains('bench-name-mgr')) {
+      var parts = txt.split(/\s*&\s*/).map(function(s){ return s.replace(/\s*\+\d+$/, '').trim(); });
+      if (parts.indexOf(myName) !== -1) el.classList.add('name-you');
+    }
+  });
+})();
 </script>
 </body></html>
-<!-- poster-version: 19 -->
+<!-- poster-version: 24 -->
