@@ -368,6 +368,10 @@
      poster's manager-name elements; pill-shaped ones also get a tinted fill. */
   .name-you{color:var(--accent) !important;font-weight:900;}
   .poster-name-pill.name-you{border-color:var(--accent);}
+  /* If the highlighted manager LOST this cup fixture, mute the pink so it sits
+     with the defeat (dimmed) styling rather than shouting a full-strength
+     accent on a loss. Still recognisably "you", just softened. */
+  .cup-match-team.loser.name-you{color:rgba(236,61,145,0.55) !important;font-weight:800;}
   .mover-subs{margin-top:8px;border-top:0.5px solid rgba(255,255,255,0.10);padding-top:7px;
               display:flex;flex-direction:column;gap:4px;}
   .mover-sub{display:block;font-size:10px;margin-bottom:5px;}
@@ -1136,7 +1140,7 @@ function pInfo(btn) {
   // plain Hub home (e.g. a shared or bookmarked link).
   var BACK = {
     debrief: {href:'../league_hub.html#debrief', lbl:'Debriefs', ic:'📰'},
-    divs:    {href:'../league_hub.html#divs',    lbl:'Divisions', ic:'🏆'}
+    divs:    {href:'../league_hub.html',         lbl:'Hub', ic:'🏠'}
   };
   var fromKey = (new URLSearchParams(location.search).get('from') || '').toLowerCase();
   var back = BACK[fromKey] || {href:'../league_hub.html', lbl:'Hub', ic:'🏠'};
@@ -1205,4 +1209,4 @@ function pInfo(btn) {
 })();
 </script>
 </body></html>
-<!-- poster-version: 24 -->
+<!-- poster-version: 25 -->
